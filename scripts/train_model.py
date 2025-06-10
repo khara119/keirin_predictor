@@ -43,9 +43,12 @@ for col in df.columns:
 
 # --- 数値変換 ---
 for col in df.columns:
-    if any(key in col for key in ["得点", "前走", "今走", "年齢", "年", "月", "日", "曜日"]):
+    if any(key in col for key in ["得点", "前走", "今走", "年齢", "年", "月", "日", "曜日", "着順"]):
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
+target_cols = [col for col in df.columns if any(key in col for key in ["前走", "今走", "着順"])]
+df[target_cols] = df[target_cols].where(df[target_cols] < 4, 4)
+        
 # --- 特徴量と目的変数の分離 ---
 target_cols = [f"{i}_着順" for i in range(1, 8)]
 drop_cols = target_cols + ["レースID", "開催日"]

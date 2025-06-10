@@ -48,6 +48,9 @@ for col in df.columns:
     if "級班" in col:
         df[col] = df[col].map(rank_map)
 
+target_cols = [col for col in df.columns if any(key in col for key in ["前走", "今走", "着順"])]
+df[target_cols] = df[target_cols].where(df[target_cols] < 4, 4)
+
 # 結果の着順カラムを削除        
 drop_result_columns = [f"{i}_着順" for i in range(1, 8)]
 df.drop(columns=drop_result_columns, inplace=True)
@@ -84,13 +87,13 @@ df = df[expected_features]
 probs = model.predict_proba(df)
 
 # 着確率のカラム名作成
-prob_cols = [f"{i+1}_{j+1}着確率" for i in range(7) for j in range(7)]
+prob_cols = [f"{i+1}_{j+1}着確率" for i in range(7) for j in range(4)]
 
 # 着確率カラムを一括で作成
 probs_df = pd.DataFrame(index=df.index)
 
 for i in range(7):  # 1〜7号車
-    for j in range(7):  # 1〜7着
+    for j in range(4):  # 1〜7着
         probs_df[f"{i+1}_{j+1}着確率"] = probs[i][:, j]  # i番車がj+1着になる確率
 
 # 予想順位
