@@ -21,7 +21,7 @@ df["日"] = df["開催日"].dt.day
 df["曜日"] = df["開催日"].dt.weekday
 
 # --- カテゴリ変数の抽出 ---
-categorical_cols = [col for col in df.columns if any(key in col for key in ["競輪場", "選手名", "出身"])]
+categorical_cols = [col for col in df.columns if any(key in col for key in ["競輪場", "競輪場都道府県", "選手名", "登録都道府県", "登録地区"])]
 
 # --- エンコード ---
 encoder = OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)
