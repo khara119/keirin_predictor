@@ -3,7 +3,26 @@ __pycache__/
 .env
 *.pkl
 *.csv
-data/
-models/
+*.spec
+dev/data/*
+!dev/data/.gitkeep  # 空ディレクトリ維持したいとき用
+dev/models/*
+!dev/models/.gitkeep  # 空ディレクトリ維持したいとき用
+
+dev/config/set_env_hook.py
+stable/config/set_env_hook.py
+
 venv/
 .DS_Store
+notebooks/
+build/
+
+# 実運用データ（Gitで追わないなら）
+stable/bin/*
+!stable/bin/.gitkeep  # 空ディレクトリ維持したいとき用
+stable/data/*
+!stable/data/.gitkeep  # 空ディレクトリ維持したいとき用
+stable/models/*
+!stable/models/.gitkeep  # 空ディレクトリ維持したいとき用
+stable/scripts/*
+!stable/scripts/.gitkeep  # 空ディレクトリ維持したいとき用
