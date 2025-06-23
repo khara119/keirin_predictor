@@ -11,9 +11,11 @@ from xgboost import XGBClassifier
 def main():
     # --- 環境判定（ENV=stable または dev） ---
     ENV = os.getenv("ENV", "dev")
+    print(f"🔍 環境: {ENV}")
 
     # --- BASE_DIR, RESOURCE_DIR 設定 ---
     if getattr(sys, 'frozen', False):
+        print("🔍 実行ファイルモードを検出しました。")
         # 実行ファイルの場合
         BASE_DIR = Path(sys.executable).parent  # 実行ファイルのある場所
         while BASE_DIR.name != "stable":
@@ -21,6 +23,7 @@ def main():
         BASE_DIR = BASE_DIR.parent
         RESOURCE_DIR = Path(sys._MEIPASS) / ENV  # 読み取り専用の追加データ
     else:
+        print("🔍 開発環境モードを検出しました。")
         # 開発環境の場合
         BASE_DIR = Path(__file__).resolve()
         while BASE_DIR.name != "keirin_predictor":
